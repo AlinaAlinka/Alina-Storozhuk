@@ -1,0 +1,627 @@
+{
+	"info": {
+		"_postman_id": "90199da4-e800-46ac-8547-dcfc84124c5d",
+		"name": "Playground_API_Tests_Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Version_Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3722f38-d50e-432c-a33d-8d1ec5e365a3",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check version info is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"version\" && \"1.1.0\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/version",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"version"
+					]
+				},
+				"description": "Version information monitoring"
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck_Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3722f38-d50e-432c-a33d-8d1ec5e365a3",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check version info is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"uptime\" && \"readonly\" && \"products\" && \"stores\" && \"categories\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/healthcheck",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				},
+				"description": "Version information monitoring"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_List_of_Services",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"total\" && \"limit\" && \"5\" && \"skip\" && \"2\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/services?$limit=5&$skip=2",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services"
+					],
+					"query": [
+						{
+							"key": "$limit",
+							"value": "5"
+						},
+						{
+							"key": "$skip",
+							"value": "2"
+						}
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Services 201 Created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 201 Created",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Service\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New Service\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/services",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Services_500 Internal Server Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 500 Internal Server Error",
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"GeneralError\" && \"code\" && \"500\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"Unexpected token } in JSON at position 26\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New Service\",\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/services",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Service_400_Bad request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 400 Bad request",
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"BadRequest\" && \"code\" && \"400\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"errors\" && \"'name' should NOT be shorter than 1 characters\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/services",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Service_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"5\" && \"name\" && \"Hablamos Español\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/services/5",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services",
+						"5"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Services_by_ID_404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '99996\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/services/99996",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services",
+						"99996"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH_Services_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Service New\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"New Service New\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/services/26",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services",
+						"26"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH_Services_by_ID 404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '9999\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"New Patch Store\",\n   \"type\": \"BigBox\",\n   \"address\": \"13513 Ridgedale Dr\",\n   \"address2\": \"\",\n   \"city\": \"Hopkins\",\n   \"state\": \"MN\",\n   \"zip\": \"55305\",\n   \"lat\": 44.969658,\n   \"lng\": -93.449539,\n   \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\",\n   \"services\":{\n   \t\t\t\t\t\"id\": 1,\n                    \"name\": \"Geek Squad Services\",\n                    \"createdAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"updatedAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"storeservices\": {\n                        \"createdAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"updatedAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"storeId\": 4,\n                        \"serviceId\": 1\n                    }\n   }\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/services/9999",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services",
+						"9999"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_Services_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check the responce body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Service\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/services/31",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services",
+						"31"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_Services_by_ID 404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '8927\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/services/8927",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"services",
+						"8927"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		}
+	]
+}

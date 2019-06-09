@@ -1,0 +1,652 @@
+{
+	"info": {
+		"_postman_id": "b9ff60b0-9453-4172-9801-3b7d97f56294",
+		"name": "Playground_API_Tests_Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Version_Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3722f38-d50e-432c-a33d-8d1ec5e365a3",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check version info is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"version\" && \"1.1.0\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/version",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"version"
+					]
+				},
+				"description": "Version information monitoring"
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck_Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3722f38-d50e-432c-a33d-8d1ec5e365a3",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check version info is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"uptime\" && \"readonly\" && \"products\" && \"stores\" && \"categories\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/healthcheck",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				},
+				"description": "Version information monitoring"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_List_of_Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"total\" && \"limit\" && \"id\" && \"9999681\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/products",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Product 201 Created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 201 Created",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Test Product\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"New Test Product\",\n    \"type\": \"HardGood\",\n    \"price\": 5.49,\n    \"upc\": \"041333415017\",\n    \"shipping\": 0,\n    \"description\": \"Long-lasting energy; DURALOCK Power Preserve technology; for toys, clocks, radios, games, remotes\",\n    \"manufacturer\": \"Duracell\",\n    \"model\": \"MN1500B4Z\",\n    \"url\": \"http://www.bestbuy.com/site/duracell-aa-1-5v-coppertop-batteries-4-pack/48530.p?id=1099385268988&skuId=48530&cmp=RMXCC\",\n    \"image\": \"http://img.bbystatic.com/BestBuy_US/images/products/4853/48530_sa.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/products",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Product_400_Bad request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 400 Bad request",
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"BadRequest\" && \"code\" && \"400\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"errors\" && \"'name' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'type' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'upc' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'description' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'manufacturer' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'model' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'url' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'image' should NOT be shorter than 1 characters\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"\",\n    \"type\": \"\",\n    \"price\": 5.49,\n    \"upc\": \"\",\n    \"shipping\": 0,\n    \"description\": \"\",\n    \"manufacturer\": \"\",\n    \"model\": \"\",\n    \"url\": \"\",\n    \"image\": \"\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/products",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Product_500 Internal Server Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 500 Internal Server Error",
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"GeneralError\" && \"code\" && \"500\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"Unexpected token , in JSON at position 71\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"New Test Product\",\n    \"type\": \"HardGood\",\n    \"price\": ,\n    \"upc\": \"041333415017\",\n    \"shipping\": 0,\n    \"description\": \"Long-lasting energy; DURALOCK Power Preserve technology; for toys, clocks, radios, games, remotes\",\n    \"manufacturer\": \"Duracell\",\n    \"model\": \"MN1500B4Z\",\n    \"url\": \"http://www.bestbuy.com/site/duracell-aa-1-5v-coppertop-batteries-4-pack/48530.p?id=1099385268988&skuId=48530&cmp=RMXCC\",\n    \"image\": \"http://img.bbystatic.com/BestBuy_US/images/products/4853/48530_sa.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/products",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Products_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"99996700\" && \"name\" && \"New Test Product\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/products/9999700",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products",
+						"9999700"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Products_by_ID_404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '99996\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/products/99996",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products",
+						"99996"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH_Products_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"Patch Test Product\" && \"price\" && \"1000\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Patch Test Product\",\n    \"type\": \"HardGood\",\n    \"price\": 1000,\n    \"upc\": \"041333415017\",\n    \"shipping\": 0,\n    \"description\": \"Long-lasting energy; DURALOCK Power Preserve technology; for toys, clocks, radios, games, remotes\",\n    \"manufacturer\": \"Duracell\",\n    \"model\": \"MN1500B4Z\",\n    \"url\": \"http://www.bestbuy.com/site/duracell-aa-1-5v-coppertop-batteries-4-pack/48530.p?id=1099385268988&skuId=48530&cmp=RMXCC\",\n    \"image\": \"http://img.bbystatic.com/BestBuy_US/images/products/4853/48530_sa.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/products/9999686",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products",
+						"9999686"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH_Products_by_ID 404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '9999\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Patch Test Product\",\n    \"type\": \"HardGood\",\n    \"price\": 1000,\n    \"upc\": \"041333415017\",\n    \"shipping\": 0,\n    \"description\": \"Long-lasting energy; DURALOCK Power Preserve technology; for toys, clocks, radios, games, remotes\",\n    \"manufacturer\": \"Duracell\",\n    \"model\": \"MN1500B4Z\",\n    \"url\": \"http://www.bestbuy.com/site/duracell-aa-1-5v-coppertop-batteries-4-pack/48530.p?id=1099385268988&skuId=48530&cmp=RMXCC\",\n    \"image\": \"http://img.bbystatic.com/BestBuy_US/images/products/4853/48530_sa.jpg\"\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/products/9999",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products",
+						"9999"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_Products_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check the responce body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Test Product\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/products/9999703",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products",
+						"9999703"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_Products_by_ID 404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '9999703'\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/products/9999703",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products",
+						"9999703"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		}
+	]
+}

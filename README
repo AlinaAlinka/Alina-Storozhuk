@@ -1,0 +1,12 @@
+There are 4 test collections one for each category that could be run independently.
+Each test collection is in the separate JSON file.
+You will need Postman to run test collection.
+Please, follow the next steps:
+1. Download all files from the repository
+2. Open Postman
+3. Set up the environment:
+ - Open "Manage environment" in the right upper corner.
+ - Click "Import" and choose the file with the environment "localhost_Playground.postman_environment".
+ - After downloading chose the environment from the environment dropdown (in the right upper corner).
+ - Import collection JSON file "Import" button in the left upper corner.
+ - Run the collection.

@@ -1,0 +1,647 @@
+{
+	"info": {
+		"_postman_id": "c5ef68fe-de36-49b0-867d-fc64e455d65f",
+		"name": "Playground_API_Tests_Stores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Version_Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3722f38-d50e-432c-a33d-8d1ec5e365a3",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check version info is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"version\" && \"1.1.0\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/version",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"version"
+					]
+				},
+				"description": "Version information monitoring"
+			},
+			"response": []
+		},
+		{
+			"name": "Healthcheck_Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3722f38-d50e-432c-a33d-8d1ec5e365a3",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check version info is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"uptime\" && \"readonly\" && \"products\" && \"stores\" && \"categories\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{localhost}}/healthcheck",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"healthcheck"
+					]
+				},
+				"description": "Version information monitoring"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_List_of_Stores",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"total\" && \"limit\" && \"id\" && \"4\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/stores",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Store 201 Created",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 201 Created",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Store\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"New Store\",\n   \"type\": \"BigBox\",\n   \"address\": \"13513 Ridgedale Dr\",\n   \"address2\": \"\",\n   \"city\": \"Hopkins\",\n   \"state\": \"MN\",\n   \"zip\": \"55305\",\n   \"lat\": 44.969658,\n   \"lng\": -93.449539,\n   \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\",\n   \"services\":{\n   \t\t\t\t\t\"id\": 1,\n                    \"name\": \"Geek Squad Services\",\n                    \"createdAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"updatedAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"storeservices\": {\n                        \"createdAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"updatedAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"storeId\": 4,\n                        \"serviceId\": 1\n                    }\n   }\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/stores",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Stores_500 Internal Server Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 500 Internal Server Error",
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"GeneralError\" && \"code\" && \"500\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"Unexpected end of JSON input\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"New Store\",\n   \"type\": \"BigBox\",\n   \"address\": \"13513 Ridgedale Dr\",\n   \"address2\": \"\",\n   \"city\": \"Hopkins\",\n   \"state\": \"MN\",\n   \"zip\": \"55305\",\n   \"lat\": 44.969658,\n   \"lng\": -93.449539,\n   \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\",\n   \"services\":{\n   \t\t\t\t\t\"id\": 1,\n                    \"name\": \"Geek Squad Services\",\n                    \"createdAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"updatedAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"storeservices\": {\n                        \"createdAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"updatedAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"storeId\": 4,\n                        \"serviceId\": 1\n                    \n   }\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/products",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "POST_Stores_400_Bad request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 400 Bad request",
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"BadRequest\" && \"code\" && \"400\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"errors\" && \"'name' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'type' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'address' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'address' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'state' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'zip' should NOT be shorter than 1 characters\");",
+							"});",
+							"",
+							"//Check error is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"'hours' should NOT be shorter than 1 characters\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"\",\n   \"type\": \"\",\n   \"address\": \"\",\n   \"address2\": \"\",\n   \"city\": \"\",\n   \"state\": \"\",\n   \"zip\": \"\",\n   \"lat\": 44.969658,\n   \"lng\": -93.449539,\n   \"hours\": \"\",\n   \"services\":{\n   \t\t\t\t\t\"id\": 1,\n                    \"name\": \"Geek Squad Services\",\n                    \"createdAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"updatedAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"storeservices\": {\n                        \"createdAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"updatedAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"storeId\": 4,\n                        \"serviceId\": 1\n                    }\n   }\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/stores",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Store_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"8923\" && \"name\" && \"New Store\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/stores/8923",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores",
+						"8923"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "GET_Stores_by_ID_404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '99996\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/stores/99996",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores",
+						"99996"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH_Store_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check product is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Patch Store\" && \"type\" && \"BigBox\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"New Patch Store\",\n   \"type\": \"BigBox\",\n   \"address\": \"13513 Ridgedale Dr\",\n   \"address2\": \"\",\n   \"city\": \"Hopkins\",\n   \"state\": \"MN\",\n   \"zip\": \"55305\",\n   \"lat\": 44.969658,\n   \"lng\": -93.449539,\n   \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\",\n   \"services\":{\n   \t\t\t\t\t\"id\": 1,\n                    \"name\": \"Geek Squad Services\",\n                    \"createdAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"updatedAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"storeservices\": {\n                        \"createdAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"updatedAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"storeId\": 4,\n                        \"serviceId\": 1\n                    }\n   }\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/stores/8",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores",
+						"8"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "PATCH_Store_by_ID 404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '9999\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"New Patch Store\",\n   \"type\": \"BigBox\",\n   \"address\": \"13513 Ridgedale Dr\",\n   \"address2\": \"\",\n   \"city\": \"Hopkins\",\n   \"state\": \"MN\",\n   \"zip\": \"55305\",\n   \"lat\": 44.969658,\n   \"lng\": -93.449539,\n   \"hours\": \"Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8\",\n   \"services\":{\n   \t\t\t\t\t\"id\": 1,\n                    \"name\": \"Geek Squad Services\",\n                    \"createdAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"updatedAt\": \"2016-11-17T17:56:35.881Z\",\n                    \"storeservices\": {\n                        \"createdAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"updatedAt\": \"2016-11-17T17:57:09.213Z\",\n                        \"storeId\": 4,\n                        \"serviceId\": 1\n                    }\n   }\n}"
+				},
+				"url": {
+					"raw": "{{localhost}}/stores/9999",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores",
+						"9999"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_Store_by_ID 200 OK",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Check the responce body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\" && \"name\" && \"New Store\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/stores/8927",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores",
+						"8927"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE_Store_by_ID 404 Not Found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69f48fcd-e068-4ae1-96d8-bbe977178f5b",
+						"exec": [
+							"//Check status message 404 Not Found",
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"//Check status message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"name\" && \"NotFound\" && \"code\" && \"404\");",
+							"});",
+							"",
+							"//Check error message is present in the body message",
+							"pm.test(\"Body matches string\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"message\" && \"No record found for id '8927\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{localhost}}/stores/8927",
+					"host": [
+						"{{localhost}}"
+					],
+					"path": [
+						"stores",
+						"8927"
+					]
+				},
+				"description": "Check the whole product list"
+			},
+			"response": []
+		}
+	]
+}
